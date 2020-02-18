@@ -13,16 +13,16 @@ class MaBoSSTestCase(unittest.TestCase):
     """
 
     def __init__(self, sim, verbose = True):
-    	"""
+        """
             Is the constructor of the class.
 
-    		:param sim: The simulation to link to the instance, it is a maboss simulation object.
-    		:param bool verbose: Variable to decide the format of the output.
+            :param sim: The simulation to link to the instance, it is a maboss simulation object.
+            :param bool verbose: Variable to decide the format of the output.
 
             Through the generated instace it is possible to perform several tests on the model passed as maboss simulation. 
             If verbose is set as 'True' the output will contain different information, otherwise it will be in the 'unit testing format'.
 
-    	"""
+        """
         unittest.TestCase.__init__(self)
         self.Simulation = sim.copy()
         self.Old_sim = (self.Simulation).copy()
@@ -119,7 +119,7 @@ class MaBoSSTestCase(unittest.TestCase):
     def checkForState(self, kind, condition={}, all_states={}):
         
         #check that the list of stable states of the model is not empty
-    	if all_states == None: return None    
+        if all_states == None: return None    
 
         #check if I'm looking for <nil> state only for last prob traj :CHECK CASE IN WICH ALL STATES ARE 0
         if ( kind == 'last' and all(i == 0 for i in condition.values()) ): 
