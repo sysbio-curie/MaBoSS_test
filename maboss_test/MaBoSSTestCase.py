@@ -106,6 +106,8 @@ class MaBoSSTestCase(unittest.TestCase):
     def getStableStates(self, sim_name):
         if sim_name == 'New': s_states_table = self.New_result.get_fptable()
         elif sim_name == 'Old': s_states_table = self.Old_result.get_fptable()
+
+        if s_states_table is None: return None
             
         s_states = s_states_table['State']
         s_states = [state.split(' -- ') for state in s_states]
