@@ -12,9 +12,17 @@ class MaBoSSTestCase(unittest.TestCase):
 
     """
 
-
-
     def __init__(self, sim, verbose = True):
+    	"""
+            Is the constructor of the class.
+
+    		:param sim: The simulation to link to the instance, it is a maboss simulation object.
+    		:param bool verbose: Variable to decide the format of the output.
+
+            Through the generated instace it is possible to perform several tests on the model passed as maboss simulation. 
+            If verbose is set as 'True' the output will contain different information, otherwise it will be in the 'unit testing format'.
+
+    	"""
         unittest.TestCase.__init__(self)
         self.Simulation = sim.copy()
         self.Old_sim = (self.Simulation).copy()
@@ -22,6 +30,7 @@ class MaBoSSTestCase(unittest.TestCase):
         self.New_sim = (self.Simulation).copy()     
         self.New_result = None
         self.VERBOSE = verbose
+
     
     #call at the end of the tests
     def resetSimulations(self):
@@ -106,9 +115,12 @@ class MaBoSSTestCase(unittest.TestCase):
         
         return probability_states
             
-    #return a dictionari with the states satisfing the condition with probability as key     
+    #return a dictionary with the states satisfing the condition with probability as key     
     def checkForState(self, kind, condition={}, all_states={}):
         
+        #check that the list of stable states of the model is not empty
+    	if all_states == None: return None    
+
         #check if I'm looking for <nil> state only for last prob traj :CHECK CASE IN WICH ALL STATES ARE 0
         if ( kind == 'last' and all(i == 0 for i in condition.values()) ): 
             active_nodes = ['<nil>']
@@ -259,9 +271,9 @@ class MaBoSSTestCase(unittest.TestCase):
         
         """
          
-        if not self.checkNodes(state): return
+        if not self.checkNodes(state): return   #if the nodes in states are not in the nodes list arrest 
         
-        self.setInitialConditions(I_C)    #set initial conditions
+        self.setInitialConditions(I_C)     #set initial conditions
         self.mutateSimulation(mutations)   #mutate New_sim
         
         self.runBothSimulations()
@@ -305,7 +317,7 @@ class MaBoSSTestCase(unittest.TestCase):
 
         This function will simulate the model with the given mutations.
         It will then extract the stable states of the model in which the activity of the nodes in condition is satisfied.
-		It will then check that, for each selected state, the values of the nodes in nodes_expected is satisfied.
+        It will then check that, for each selected state, the values of the nodes in nodes_expected is satisfied.
         If not correct, this test will fail by raising an exception. 
         
         """
