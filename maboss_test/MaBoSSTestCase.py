@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import unittest
 import maboss
 import math
@@ -106,9 +103,9 @@ class MaBoSSTestCase(unittest.TestCase):
     def getStableStates(self, sim_name):
         if sim_name == 'New': s_states_table = self.New_result.get_fptable()
         elif sim_name == 'Old': s_states_table = self.Old_result.get_fptable()
-
+        
         if s_states_table is None: return None
-            
+        
         s_states = s_states_table['State']
         s_states = [state.split(' -- ') for state in s_states]
         s_states_prob = s_states_table['Proba']
@@ -149,9 +146,9 @@ class MaBoSSTestCase(unittest.TestCase):
         stepper = 10.0 ** digits
         return math.trunc(stepper * number) / stepper
     
-    #print the dictionary: prob_ state in a nice form
+    
     def printStates(self, states):
-        if states == None: print('No one')
+        if states == None: print('None')
         else:
             for prob in states:
                 print('\nProbability = ', prob, '\nState: ', str(states[prob]))
@@ -164,37 +161,49 @@ class MaBoSSTestCase(unittest.TestCase):
         New_p = self.truncate(New_p, digits)
               
         #INCREASE?
-        if direction == self.INCREASE: 
-            try:
-                self.assertTrue(New_p > Old_p)
-                if self.VERBOSE: print("True! ", message)
-                else: print('... OK')
+        if direction == self.INCREASE:
+            if self.VERBOSE:
+                try:
+                    self.assertTrue(New_p > Old_p)
+                    print("True! ", message)
             
-            except Exception as e:
-                if self.VERBOSE: print("False! ", message)
-                else: print(e)
+                except Exception as e:
+                    print("False! ", message)
+            
+            elif not self.VERBOSE:
+                self.assertTrue(New_p > Old_p)
+                print('...OK')
+                
                 
         #DECREASE?   
         elif direction == self.DECREASE:
-            try:
-                self.assertTrue(New_p < Old_p)
-                if self.VERBOSE: print("True! ", message)
-                else: print('... OK')
+            if self.VERBOSE:
+                try:
+                    self.assertTrue(New_p < Old_p)
+                    print("True! ", message)
             
-            except Exception as e:
-                if self.VERBOSE: print("False! ", message)
-                else: print(e)
+                except Exception as e:
+                    print("False! ", message)
+                    
+            elif not self.VERBOSE:
+                self.assertTrue(New_p < Old_p)
+                print('...OK')
+                
                 
         #STAY THE SAME?
-        elif direction == self.CHANGE: 
-            try:
-                self.assertAlmostEqual(Old_p, New_p)
-                if self.VERBOSE: print("True! ", message)
-                else: print('... OK')
+        elif direction == self.CHANGE:
+            if self.VERBOSE:
+                try:
+                    self.assertAlmostEqual(Old_p, New_p)
+                    print("True! ", message)
             
-            except Exception as e:
-                if self.VERBOSE: print("False! ", message)
-                else: print(e)
+                except Exception as e:
+                    print("False! ", message)
+            
+            elif not self.VERBOSE:
+                self.assertAlmostEqual(Old_p, New_p)
+                print('...OK')
+                
             
            
         return   
@@ -203,6 +212,7 @@ class MaBoSSTestCase(unittest.TestCase):
     ##################################################################################################################
     ############################################ ASSERTION FUNCTIONS #################################################
     ##################################################################################################################
+    
     
 
     def assertStateProbabilityEvolution(self, mutations, I_C, state, direction, digits = 4):
@@ -257,6 +267,7 @@ class MaBoSSTestCase(unittest.TestCase):
         return
     
    
+
     def assertStableStateProbabilityEvolution(self, mutations, I_C, state, direction, digits = 4):
         """
         Assert the evolution of the probability of a given stable state after applying a mutation.
@@ -285,6 +296,7 @@ class MaBoSSTestCase(unittest.TestCase):
         
         Old_states = self.checkForState('stable', state, all_Old_stable_states)
         New_states = self.checkForState('stable', state, all_New_stable_states)     
+        
         
         Old_state_prob = 0
         if Old_states != None: 
@@ -343,21 +355,25 @@ class MaBoSSTestCase(unittest.TestCase):
             print("Not even one stable state satisfy: ", condition)
             return
         
-        try:
-            self.assertEqual(states_satisfying_condition, selected_states)
-            if self.VERBOSE: print("True! \nAll the states that satisfy: ", condition, " have: ", nodes_expected)
-            else: print("... OK")
+        
+        if self.VERBOSE:
+            try:
+                self.assertEqual(states_satisfying_condition, selected_states)
+                print("True! \nAll the states that satisfy: ", condition, " have: ", nodes_expected)
                 
-        except Exception as e: 
-            if self.VERBOSE: 
+                
+            except Exception as e: 
                 print('False! \nThe states with ', condition, ' are : ') 
                 self.printStates(states_satisfying_condition)
                 print('\nOf these, those with ', nodes_expected, ' are: ')                        
-                self.printStates(selected_states)                  
+                self.printStates(selected_states)
+                
+        elif not self.VERBOSE:
+            self.assertEqual(states_satisfying_condition, selected_states)
+            print('...OK')
                                          
-            else: print(e)
+             
             
-        
         self.resetSimulations()
         
         return
@@ -404,14 +420,6 @@ class MaBoSSTestCase(unittest.TestCase):
         self.resetSimulations()
         
         return
-        
-        
-        
-    INCREASE = 'increase'
-    DECREASE = 'decrease'
-    CHANGE = 'stable'                      #actually it is: does not change  
-   
-
 
 
 	#take last nodes probability for every node
@@ -456,8 +464,7 @@ class MaBoSSTestCase(unittest.TestCase):
         return probability 
 
 
-# In[ ]:
-
-
-
-
+    INCREASE = 'increase'
+    DECREASE = 'decrease'
+    CHANGE = 'stable'                      #actually it is: does not change  
+   
