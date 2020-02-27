@@ -1,0 +1,203 @@
+Node Mac1_gene {
+  logic = (Spi1_b1 & Spi1_b2);
+  rate_up = @logic ? $u_Mac1_gene : 0;
+  rate_down = @logic ? 0 : $d_Mac1_gene;
+}
+
+Node Mac1 {
+  logic = (Mac1_gene);
+  rate_up = @logic ? $u_Mac1 : 0;
+  rate_down = @logic ? 0 : $d_Mac1;
+}
+
+Node Id2 {
+  logic = (Cebpb & Cebpa & Spi1_b1 & !Gfi1 & !Ebf1);
+  rate_up = @logic ? $u_Id2 : 0;
+  rate_down = @logic ? 0 : $d_Id2;
+}
+
+Node Egr2 {
+  logic = (!Spi1_b1 & Pax5_prot_active) | (Spi1_b1 & !Spi1_b2 & !Gfi1) | (Spi1_b1 & !Spi1_b2 & Gfi1 & Pax5_prot_active) | (Spi1_b1 & Spi1_b2);
+  rate_up = @logic ? $u_Egr2 : 0;
+  rate_down = @logic ? 0 : $d_Egr2;
+}
+
+Node Cebpb {
+  logic = (!Cebpb & Cebpa & Spi1_b1 & Spi1_b2) | (Cebpb & Spi1_b1 & Spi1_b2);
+  rate_up = @logic ? $u_Cebpb : 0;
+  rate_down = @logic ? 0 : $d_Cebpb;
+}
+
+Node Cebpa_gene {
+  logic = (Spi1_b1 & Runx1 & !Foxo1);
+  rate_up = @logic ? $u_Cebpa_gene : 0;
+  rate_down = @logic ? 0 : $d_Cebpa_gene;
+}
+
+Node Cebpa {
+  logic = (!Cebpa_gene & Cebpa_ER) | (Cebpa_gene);
+  rate_up = @logic ? $u_Cebpa : 0;
+  rate_down = @logic ? 0 : $d_Cebpa;
+}
+
+Node Csf1r {
+  logic = (Spi1_b1 & !Pax5_prot_active);
+  rate_up = @logic ? $u_Csf1r : 0;
+  rate_down = @logic ? 0 : $d_Csf1r;
+}
+
+Node Csf1r_act {
+  logic = (Csf1r & Csf1);
+  rate_up = @logic ? $u_Csf1r_act : 0;
+  rate_down = @logic ? 0 : $d_Csf1r_act;
+}
+
+Node Spi1_b1 {
+  logic = (!Cebpb & !Cebpa & !Spi1_b1 & !Runx1 & Ikzf1 & Foxo1 & Ebf1) | (!Cebpb & !Cebpa & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & !Ikzf1) | (!Cebpb & !Cebpa & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (!Cebpb & !Cebpa & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & !Ikzf1 & !Foxo1) | (!Cebpb & !Cebpa & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & Ikzf1) | (!Cebpb & !Cebpa & Spi1_b1 & Spi1_b2) | (!Cebpb & Cebpa & !Csf1r_act & !Spi1_b1 & !Runx1 & Ikzf1 & Foxo1 & Ebf1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & !Ikzf1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & !Ikzf1 & !Foxo1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & Ikzf1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & Spi1_b2) | (!Cebpb & Cebpa & Csf1r_act & !Spi1_b1 & !Runx1 & Ikzf1 & Foxo1 & Ebf1) | (!Cebpb & Cebpa & Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1) | (!Cebpb & Cebpa & Csf1r_act & Spi1_b1 & Spi1_b2) | (Cebpb & !Csf1r_act & !Spi1_b1 & !Runx1 & Ikzf1 & Foxo1 & Ebf1) | (Cebpb & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & !Ikzf1) | (Cebpb & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (Cebpb & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & !Ikzf1 & !Foxo1) | (Cebpb & !Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1 & Gfi1 & Ikzf1) | (Cebpb & !Csf1r_act & Spi1_b1 & Spi1_b2) | (Cebpb & Csf1r_act & !Spi1_b1 & !Runx1 & Ikzf1 & Foxo1 & Ebf1) | (Cebpb & Csf1r_act & Spi1_b1 & !Spi1_b2 & Runx1) | (Cebpb & Csf1r_act & Spi1_b1 & Spi1_b2);
+  rate_up = @logic ? $u_Spi1_b1 : 0;
+  rate_down = @logic ? 0 : $d_Spi1_b1;
+}
+
+Node Spi1_b2 {
+  logic = (!Cebpb & !Cebpa & Spi1_b1 & Runx1 & !Gfi1 & !Ikzf1) | (!Cebpb & !Cebpa & Spi1_b1 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & Runx1 & !Gfi1 & !Ikzf1) | (!Cebpb & Cebpa & !Csf1r_act & Spi1_b1 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (!Cebpb & Cebpa & Csf1r_act & Spi1_b1 & Runx1) | (Cebpb & !Csf1r_act & Spi1_b1 & Runx1 & !Gfi1 & !Ikzf1) | (Cebpb & !Csf1r_act & Spi1_b1 & Runx1 & !Gfi1 & Ikzf1 & !Foxo1) | (Cebpb & Csf1r_act & Spi1_b1 & Runx1);
+  rate_up = @logic ? $u_Spi1_b2 : 0;
+  rate_down = @logic ? 0 : $d_Spi1_b2;
+}
+
+Node Runx1 {
+  logic = (Spi1_b1);
+  rate_up = @logic ? $u_Runx1 : 0;
+  rate_down = @logic ? 0 : $d_Runx1;
+}
+
+Node Gfi1 {
+  logic = (!Egr2 & !Cebpa & !Ikzf1 & Pax5_prot_active) | (!Egr2 & !Cebpa & Ikzf1) | (!Egr2 & Cebpa) | (Egr2 & Pax5_prot_active);
+  rate_up = @logic ? $u_Gfi1 : 0;
+  rate_down = @logic ? 0 : $d_Gfi1;
+}
+
+Node Ikzf1 {
+  logic = (!Mef2c & Pax5_prot_active) | (Mef2c);
+  rate_up = @logic ? $u_Ikzf1 : 0;
+  rate_down = @logic ? 0 : $d_Ikzf1;
+}
+
+Node Flt3 {
+  logic = (Spi1_b1 & Ikzf1 & !Pax5_prot_active);
+  rate_up = @logic ? $u_Flt3 : 0;
+  rate_down = @logic ? 0 : $d_Flt3;
+}
+
+Node Mef2c {
+  logic = (!Cebpb & !Cebpa & Spi1_b1);
+  rate_up = @logic ? $u_Mef2c : 0;
+  rate_down = @logic ? 0 : $d_Mef2c;
+}
+
+Node Ets1 {
+  logic = (E2a_prot_Active);
+  rate_up = @logic ? $u_Ets1 : 0;
+  rate_down = @logic ? 0 : $d_Ets1;
+}
+
+Node Il7ra {
+  logic = (!Cebpb & !Cebpa & !Spi1_b1 & Foxo1 & Ebf1) | (!Cebpb & !Cebpa & Spi1_b1 & !Mef2c & Foxo1 & Ebf1) | (!Cebpb & !Cebpa & Spi1_b1 & Mef2c);
+  rate_up = @logic ? $u_Il7ra : 0;
+  rate_down = @logic ? 0 : $d_Il7ra;
+}
+
+Node Il7r_act {
+  logic = (Il7ra & Il7);
+  rate_up = @logic ? $u_Il7r_act : 0;
+  rate_down = @logic ? 0 : $d_Il7r_act;
+}
+
+Node E2a_gene {
+  logic = (!Spi1_b1 & Ikzf1 & Ebf1 & Pax5_prot_active) | (Spi1_b1 & Ikzf1);
+  rate_up = @logic ? $u_E2a_gene : 0;
+  rate_down = @logic ? 0 : $d_E2a_gene;
+}
+
+Node E2a {
+  logic = (E2a_gene);
+  rate_up = @logic ? $u_E2a : 0;
+  rate_down = @logic ? 0 : $d_E2a;
+}
+
+Node E2a_prot_Active {
+  logic = (!Id2 & E2a);
+  rate_up = @logic ? $u_E2a_prot_Active : 0;
+  rate_down = @logic ? 0 : $d_E2a_prot_Active;
+}
+
+Node Foxo1_gene {
+  logic = (!Cebpb & !Cebpa & E2a_prot_Active);
+  rate_up = @logic ? $u_Foxo1_gene : 0;
+  rate_down = @logic ? 0 : $d_Foxo1_gene;
+}
+
+Node Foxo1 {
+  logic = (Foxo1_gene);
+  rate_up = @logic ? $u_Foxo1 : 0;
+  rate_down = @logic ? 0 : $d_Foxo1;
+}
+
+Node Ebf1 {
+  logic = (Ebf1_gene);
+  rate_up = @logic ? $u_Ebf1 : 0;
+  rate_down = @logic ? 0 : $d_Ebf1;
+}
+
+Node Ebf1_gene {
+  logic = (!Cebpb & !Cebpa & !Spi1_b1 & Ets1 & E2a_prot_Active & Foxo1 & Ebf1 & Pax5_prot_active) | (!Cebpb & !Cebpa & Spi1_b1 & !Runx1 & Ets1 & E2a_prot_Active & Foxo1 & Ebf1 & Pax5_prot_active) | (!Cebpb & !Cebpa & Spi1_b1 & Runx1 & Ets1 & !Il7r_act & E2a_prot_Active & Foxo1 & Ebf1 & Pax5_prot_active) | (!Cebpb & !Cebpa & Spi1_b1 & Runx1 & Ets1 & Il7r_act & E2a_prot_Active & Foxo1);
+  rate_up = @logic ? $u_Ebf1_gene : 0;
+  rate_down = @logic ? 0 : $d_Ebf1_gene;
+}
+
+Node Pax5_gene {
+  logic = (!Cebpb & !Cebpa & Ebf1);
+  rate_up = @logic ? $u_Pax5_gene : 0;
+  rate_down = @logic ? 0 : $d_Pax5_gene;
+}
+
+Node Pax5 {
+  logic = (Pax5_gene);
+  rate_up = @logic ? $u_Pax5 : 0;
+  rate_down = @logic ? 0 : $d_Pax5;
+}
+
+Node Pax5_prot_active {
+  logic = (!Id2 & Pax5);
+  rate_up = @logic ? $u_Pax5_prot_active : 0;
+  rate_down = @logic ? 0 : $d_Pax5_prot_active;
+}
+
+Node Cd19_gene {
+  logic = (!Cebpa & Pax5_prot_active);
+  rate_up = @logic ? $u_Cd19_gene : 0;
+  rate_down = @logic ? 0 : $d_Cd19_gene;
+}
+
+Node Cd19 {
+  logic = (Cd19_gene);
+  rate_up = @logic ? $u_Cd19 : 0;
+  rate_down = @logic ? 0 : $d_Cd19;
+}
+
+Node Csf1 {
+  logic = (Csf1);
+  rate_up = @logic ? $u_Csf1 : 0;
+  rate_down = @logic ? 0 : $d_Csf1;
+}
+
+Node Il7 {
+  logic = (Il7);
+  rate_up = @logic ? $u_Il7 : 0;
+  rate_down = @logic ? 0 : $d_Il7;
+}
+
+Node Cebpa_ER {
+  rate_up = 0;
+  rate_down = $u_Cebpa_ER;
+}
+
