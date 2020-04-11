@@ -178,14 +178,8 @@ Node SOX10 {
   rate_down = @logic ? 0 : $d_SOX10;
 }
 
-Node pSOX10 {
-  logic = (ERK_b1 & SOX10);
-  rate_up = @logic ? $u_pSOX10 : 0;
-  rate_down = @logic ? 0 : $d_pSOX10;
-}
-
 Node FOXD3 {
-  logic = (SOX10 & !pSOX10);
+  logic = (!ERK_b1 & SOX10);
   rate_up = @logic ? $u_FOXD3 : 0;
   rate_down = @logic ? 0 : $d_FOXD3;
 }
@@ -221,7 +215,7 @@ Node p21 {
 }
 
 Node MDM2 {
-  logic = (!AKT & !ATM & p53) | (AKT & !ATM);
+  logic = (AKT & !ATM & p53);
   rate_up = @logic ? $u_MDM2 : 0;
   rate_down = @logic ? 0 : $d_MDM2;
 }
