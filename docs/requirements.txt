@@ -1,3 +1,4 @@
 maboss
 nbsphinx
+nbsphinx-link
 pandoc
