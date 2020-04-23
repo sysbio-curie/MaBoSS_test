@@ -12,7 +12,9 @@ Tutorial
 .. toctree::
    :maxdepth: 1
 
-   Tutorial.ipynb
+   tutorial.nblink
+   braf.nblink
+   collombet.nblink
 
 API
 ---
